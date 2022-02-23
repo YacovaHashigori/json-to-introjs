@@ -10,7 +10,7 @@ import {
   applyIntroOptions,
 } from "./src/js/functions";
 import { isNewIntro } from "./src/js/services/storage";
-// import "./index.css";
+import "./src/css/index.css";
 
 class jsonToIntrojs {
   data = defaultData;
