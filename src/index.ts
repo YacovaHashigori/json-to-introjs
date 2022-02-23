@@ -1,5 +1,5 @@
-import { defaultOptions, defaultData, defaultTheme } from "./src/js/defaults";
-import { JTI } from "./src/js/types";
+import { defaultOptions, defaultData, defaultTheme } from "./js/defaults";
+import { JTI } from "./js/types";
 import {
   fetchAndDecode,
   setTheme,
@@ -8,9 +8,10 @@ import {
   customError,
   dataReady,
   applyIntroOptions,
-} from "./src/js/functions";
-import { isNewIntro } from "./src/js/services/storage";
-import "./src/css/index.css";
+} from "./js/functions";
+import { isNewIntro } from "./js/services/storage";
+
+import "./css/index.css";
 
 class jsonToIntrojs {
   data = defaultData;

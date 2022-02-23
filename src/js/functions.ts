@@ -1,5 +1,5 @@
 import introJs from "intro.js";
-import jsonToIntrojs from "../../index";
+import jsonToIntrojs from "../index";
 import StorageService from "./services/storage";
 import { JTI } from "./types";
 

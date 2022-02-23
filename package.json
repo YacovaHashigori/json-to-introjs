@@ -3,9 +3,12 @@
   "version": "1.0.0",
   "description": "config multiple intros via json file",
   "main": "dist/index.js",
+  "source": "src/index.ts",
   "scripts": {
-    "start": "npx parcel index.ts",
-    "build": "npx parcel build index.ts",
+    "start": "npx parcel",
+    "build:parcel": "npx parcel build --no-source-maps",
+    "build": "npm run clean && npm run build:parcel",
+    "clean": "rm -rf dist/*",
     "check": "tsc --noEmit"
   },
   "repository": {
@@ -22,6 +25,7 @@
   },
   "homepage": "https://github.com/YacovaHashigori/json-to-introjs#readme",
   "devDependencies": {
+    "@parcel/transformer-typescript-types": "^2.3.2",
     "@types/intro.js": "^3.0.2",
     "parcel": "^2.3.2",
     "typescript": "^4.5.5"
