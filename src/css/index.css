@@ -1,0 +1,140 @@
+.jti-button {
+  position: fixed;
+  padding: 0.6rem 1.2rem;
+  right: 1rem;
+  bottom: 1rem;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+}
+.jti-button:hover {
+  border-color: var(--introjs-color);
+  color: var(--introjs-color);
+  background-color: white;
+}
+
+/* Opionionated overwrite of introjs */
+.introjs-tooltip {
+  background-color: transparent;
+  box-shadow: none;
+  max-width: 400px;
+  padding: 2rem 1rem 0 1rem;
+}
+.introjs-tooltip * {
+  float: none;
+}
+
+.introjs-arrow {
+  border: 10px solid transparent;
+}
+.introjs-arrow.top {
+  top: calc(2rem - 20px);
+  left: unset;
+  right: calc(1rem + 20px);
+  border-bottom-color: var(--introjs-color);
+}
+.introjs-arrow.left {
+  left: calc(-20px + 1rem);
+  top: calc(20px + 2rem);
+  border-right-color: var(--introjs-color);
+}
+.introjs-arrow.right {
+  right: -4px;
+  top: calc(10px + 2rem);
+  border-left-color: var(--introjs-color);
+}
+
+.introjs-tooltip-header {
+  position: absolute;
+  bottom: calc(100% - 2rem);
+  padding: 0 1rem 0.5rem 1rem;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.introjs-tooltip-title {
+  line-height: 1.1;
+  color: var(--introjs-color);
+  text-transform: uppercase;
+  font-size: 0.9rem;
+  font-weight: 400;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+}
+
+.introjs-skipbutton {
+  display: none;
+}
+
+.introjs-tooltiptext {
+  background-color: var(--introjs-color);
+  color: white;
+  border-radius: 6px;
+  padding: 0.8rem 1rem;
+  font-size: 1.2em;
+  filter: drop-shadow(0px 4px 15px rgba(0, 0, 0, 0.1));
+}
+
+.introjs-overlay {
+  backdrop-filter: blur(4px);
+  opacity: 1;
+}
+
+.introjs-helperLayer {
+  box-shadow: var(--introjs-color) 0px 0px 1px 2px,
+    rgb(255 255 255 / 90%) 0px 0px 0px 5000px !important;
+}
+
+.introjs-bullets {
+  height: 50px;
+  margin-top: 0.5rem;
+}
+
+.introjs-tooltipbuttons {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  padding: 0 1rem;
+  border-top: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  pointer-events: none;
+  height: 50px;
+}
+.introjs-tooltipbuttons:after {
+  content: none;
+}
+
+.introjs-button {
+  pointer-events: all;
+  border: none;
+  background-color: transparent !important;
+  text-shadow: none;
+  max-height: calc(50px - (2 * 0.5rem));
+  transition: transform 100ms ease;
+  display: inline-block;
+  border-radius: 6px;
+}
+.introjs-button:hover {
+  transform: scale(1.1);
+}
+.introjs-button:focus {
+  box-shadow: none;
+  border: none;
+}
+.introjs-button.introjs-disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+.introjs-button.introjs-disabled:hover,
+.introjs-button.introjs-donebutton:hover {
+  transform: none;
+}
+.introjs-button svg > * {
+  stroke: var(--introjs-color);
+}
