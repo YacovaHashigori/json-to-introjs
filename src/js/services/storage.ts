@@ -1,5 +1,5 @@
 import { defaultStorage } from "../defaults";
-import { JTI } from "../types";
+import { JTI } from "../../types/types";
 
 const StorageService = {
   key: "JTI",

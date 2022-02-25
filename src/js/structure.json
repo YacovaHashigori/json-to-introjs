@@ -1,0 +1,20 @@
+{
+  "JTI": {
+    "options": {},
+    "theme": {}
+  },
+  "introjs": {
+    "options": {},
+    "intros": [
+      {
+        "element": "",
+        "steps": [
+          {
+            "element": "",
+            "intro": ""
+          }
+        ]
+      }
+    ]
+  }
+}
