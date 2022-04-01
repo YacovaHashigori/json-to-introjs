@@ -2,13 +2,10 @@
   "name": "json-to-introjs",
   "version": "1.0.0",
   "description": "config multiple intros via json file",
-  "main": "dist/index.js",
+  "main": "build/index.js",
   "source": "src/index.ts",
   "scripts": {
-    "start": "npx parcel",
-    "build:parcel": "npx parcel build --no-source-maps",
-    "build": "npm run clean && npm run build:parcel",
-    "clean": "rm -rf dist/*",
+    "start": "parcel watch ",
     "check": "tsc --noEmit"
   },
   "repository": {
