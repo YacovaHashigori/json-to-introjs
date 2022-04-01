@@ -18,17 +18,6 @@ export async function fetchAndDecode<T>(url): Promise<T> {
   return content;
 }
 
-export const checkJsonStructure = (json, structure: JTI.IntrosJson) => {
-  //   Object.entries(structure).forEach(([key, val]) => {
-  //       if(!json[key]) return false;
-  //       if(typeof val == "array") {
-  //         if(json[key].length === 0) return false;
-  //         return checkJsonStructure(json[key][0], structure[key][0]);
-  //       }
-  //   })
-  return true;
-};
-
 export const findCurrentIntro = (intros: JTI.Intros): JTI.Intro | undefined => {
   return intros.find((intro: JTI.Intro) =>
     document.querySelector(intro.element) ? intro : false

@@ -1,12 +1,12 @@
 # json-to-introjs (JTI)
 
-Package that allows you to use the Tour API of Introjs via a single JSON config.
+Make use of the Tour API of Introjs via a single JSON config.
 
 ---
 
 ## Json config
 
-A sample of the json structure to follow can be found [here](./src/js/structure.json)
+A sample of the json structure to follow can be found [here](./src/structure.json)
 
 ### JTI
 
