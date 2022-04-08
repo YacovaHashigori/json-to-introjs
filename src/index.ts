@@ -5,7 +5,6 @@ import { JTI } from "./types/types";
 import {
 	fetchJson,
 	findIntro,
-	applyIntroOptions,
 } from "./js/functions";
 import StorageService, { StorageServiceCheck } from "./js/services/storage";
 
@@ -32,33 +31,50 @@ class jsonToIntrojs {
 
 				let intro = findIntro(introjsIntros);
 				if (intro) {
-					// Set & apply options, theme
-					this.options = { ...this.options, ...JTIOptions };
-					this.theme = { ...this.theme, ...JTITheme };
-					this.applyTheme();
-
 					// Set data
 					this.data.options = introjsOptions;
 					this.data.intros = introjsIntros;
-					this.data.intro = applyIntroOptions(this.options, intro);
+					this.data.intro = intro;
 
-					this.applyOptions();
+					// Set & apply theme
+					this.theme = { ...this.theme, ...JTITheme };
+					this.#applyTheme();
+
+					// Set & apply options
+					this.options = { ...this.options, ...JTIOptions };
+					this.#applyOptions();
+
 				}
 			} else {
 				this.status = JTI.Status.Error;
 			}
 		});
 	}
-	applyTheme() {
+	#applyTheme() {
 		Object.entries(this.theme).forEach(([prop, value]) => {
 			document.documentElement.style.setProperty(`--introjs-${prop}`, value);
 		});
 	}
-	applyOptions() {
+	#applyOptions() {
 		Object.entries(this.options).forEach(([prop, value]) => {
 			switch (prop) {
 				case "autoplay":
 					if (StorageService.check(this.data.intro.element, StorageServiceCheck.New) && value) this.start();
+					break;
+				case "numbering":
+					if (value) {
+						this.data.intro = {
+							...this.data.intro,
+							steps: this.data.intro.steps.map((step, id) =>
+								step.title
+									? {
+										...step,
+										title: `<span style="font-size:0.8em">#</span>${id + 1}<span style="font-size:0.7em; margin: 0 4px">•</span>${step.title}`,
+									}
+									: step
+							),
+						};
+					};
 					break;
 				case "button":
 					if (value) document.querySelector(value as string)?.addEventListener('click', () => { this.start() });
@@ -69,8 +85,8 @@ class jsonToIntrojs {
 	start() {
 		switch (this.status) {
 			case JTI.Status.Loaded:
-				let { options, intros, intro } = this.data;
-				// If current intro has specific options, overwrite default options
+				let { options, intro } = this.data;
+				// If current intro has specific options, overwrite default introjs options
 				if (intro.options) {
 					options = { ...options, ...intro.options };
 				}

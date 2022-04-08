@@ -11,14 +11,15 @@ A sample of the json structure to follow can be found [here](./src/structure.jso
 ### JTI
 
 Infos about JTI default values : [defaultOptions / defaultTheme](./src/js/defaults.ts)
+These options take effect on all intros (futur implementation might allow you to be more specific)
 
 #### Options
 
-| key       | values                | description                                          |
-| --------- | --------------------- | ---------------------------------------------------- |
-| autoplay  | boolean               | Automaticaly start intro if there's one on this page |
-| numbering | boolean               | Prefix each step's title with a number               |
-| button    | string (accepts html) | Button to start/restart an intro                     |
+| key       | values  | description                                                       |
+| --------- | ------- | ----------------------------------------------------------------- |
+| autoplay  | boolean | Automaticaly start intro if there's one on this page              |
+| numbering | boolean | Prefix each step's title with a number                            |
+| button    | string  | A css selector for the button that will be used to start an Intro |
 
 #### Theme
 
@@ -32,24 +33,26 @@ Infos about JTI default values : [defaultOptions / defaultTheme](./src/js/defaul
 
 #### Options
 
-List of available options is the same as [in the doc](https://introjs.com/docs/intro/options) of Introjs. These are general options that will apply to all Intros.
+List of available Tour API options : [introjs doc](https://introjs.com/docs/intro/options).
+
+> These options are global, meaning that they will apply to all Intros
 
 #### Intros
 
-Intros are composed of a list of Intro objects. Each Intro is composed of the following :
+List (array) of Intros. Each Intro is composed of the following :
 
-| key     | values | required | description                                                        |
-| ------- | ------ | -------- | ------------------------------------------------------------------ |
-| element | string | yes      | A UNIQUE css selector that identifies the container for this intro |
-| steps   | array  | yes      | Array of Step objects                                              |
+| key     | values | required | description                                                               |
+| ------- | ------ | -------- | ------------------------------------------------------------------------- |
+| element | string | yes      | A <b>unique</b> css selector that identifies the container for this intro |
+| steps   | array  | yes      | Array of Step objects                                                     |
+| options | object | no       | Same as options mentioned above, but only apply to a specific Intro       |
 
 #### Step
 
-A list of additional options are listed [in the doc](https://introjs.com/docs/intro/attributes) of Introjs.
+List of available Step options : [introjs doc](https://introjs.com/docs/intro/attributes)
 
-> Those options should be written without the `data-` part & in camelCase
+> Those options should be written without `data-` and in camelCase (eg. "data-scroll-to" becomes "scrollTo")
 
 | key     | values | required | description                                                                                           |
 | ------- | ------ | -------- | ----------------------------------------------------------------------------------------------------- |
 | element | string | no       | A css selector of the element to focus. If none specified, it will appear on the center of the screen |
-| options | object | no       | Introjs options that should be used only by a specific step                                           |
