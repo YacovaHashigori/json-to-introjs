@@ -1,69 +1,94 @@
+import introJs from "intro.js";
+
 import { defaultOptions, defaultData, defaultTheme } from "./js/defaults";
 import { JTI } from "./types/types";
 import {
-  fetchAndDecode,
-  setTheme,
-  findCurrentIntro,
-  createBtnElement,
-  customError,
-  dataReady,
-  applyIntroOptions,
+	fetchJson,
+	findIntro,
+	applyIntroOptions,
 } from "./js/functions";
-import { isNewIntro } from "./js/services/storage";
+import StorageService, { StorageServiceCheck } from "./js/services/storage";
 
 import "./css/index.css";
 
 class jsonToIntrojs {
-  data = defaultData; // introjs
-  options = defaultOptions;
-  theme = defaultTheme;
-  status = JTI.Status.Unloaded;
-  init(jsonPath: string) {
-    this.status = JTI.Status.Loading;
+	introjs = null; // introjs instance
+	data = defaultData; // introjs data
+	options = defaultOptions;
+	theme = defaultTheme;
+	status = JTI.Status.Unloaded;
+	constructor(jsonPath: string) {
+		this.status = JTI.Status.Loading;
 
-    fetchAndDecode<JTI.IntrosJson>(jsonPath).then((data) => {
-      this.status = JTI.Status.Loaded;
+		fetchJson<JTI.IntrosJson>(jsonPath).then((data) => {
+			if (data) {
+				this.status = JTI.Status.Loaded;
 
-      const {
-        JTI: { options: options, theme: theme },
-        introjs: { intros, options: introjsOptions },
-      }: JTI.IntrosJson = data;
+				// Assign data to variables
+				const {
+					JTI: { options: JTIOptions, theme: JTITheme },
+					introjs: { intros: introjsIntros, options: introjsOptions },
+				}: JTI.IntrosJson = data;
 
-      let currentIntro = findCurrentIntro(intros);
-      if (currentIntro) {
-        this.options = { ...this.options, ...options };
-        this.theme = { ...this.theme, ...theme };
-        setTheme(this.theme);
+				let intro = findIntro(introjsIntros);
+				if (intro) {
+					// Set & apply options, theme
+					this.options = { ...this.options, ...JTIOptions };
+					this.theme = { ...this.theme, ...JTITheme };
+					this.applyTheme();
 
-        this.data.options = introjsOptions;
-        this.data.intros = intros;
-        this.data.intro = applyIntroOptions(this.options, currentIntro);
+					// Set data
+					this.data.options = introjsOptions;
+					this.data.intros = introjsIntros;
+					this.data.intro = applyIntroOptions(this.options, intro);
 
-        console.log(this.options);
-        if (isNewIntro(currentIntro.element)) {
-          if (this.options.autoplay) {
-            this.start();
-          }
-        }
-        if (this.options.button) {
-          createBtnElement();
-        }
-      }
-    });
-  }
-  start() {
-    if (this.status == JTI.Status.Loaded) {
-      dataReady(this.data);
-    } else if (this.status == JTI.Status.Loading) {
-      let awaitData = setInterval(() => {
-        if (!this.data.intros.length) return;
-        dataReady(this.data);
-        clearInterval(awaitData);
-      }, this.options.delay);
-    } else {
-      console.error(customError("Method init must be called before start"));
-    }
-  }
+					this.applyOptions();
+				}
+			} else {
+				this.status = JTI.Status.Error;
+			}
+		});
+	}
+	applyTheme() {
+		Object.entries(this.theme).forEach(([prop, value]) => {
+			document.documentElement.style.setProperty(`--introjs-${prop}`, value);
+		});
+	}
+	applyOptions() {
+		Object.entries(this.options).forEach(([prop, value]) => {
+			switch (prop) {
+				case "autoplay":
+					if (StorageService.check(this.data.intro.element, StorageServiceCheck.New) && value) this.start();
+					break;
+				case "button":
+					if (value) document.querySelector(value as string)?.addEventListener('click', () => { this.start() });
+					break;
+			}
+		})
+	}
+	start() {
+		switch (this.status) {
+			case JTI.Status.Loaded:
+				let { options, intros, intro } = this.data;
+				// If current intro has specific options, overwrite default options
+				if (intro.options) {
+					options = { ...options, ...intro.options };
+				}
+				this.introjs = introJs(intro.element)
+					.setOptions({ ...options, steps: intro.steps })
+					.onexit(() => {
+						StorageService.add(intro.element);
+					})
+					.start();
+				break;
+			case JTI.Status.Loading:
+				// Loading...
+				break;
+			case JTI.Status.Error:
+				// Error...
+				break;
+		}
+	}
 }
 
-export default new jsonToIntrojs();
+export default jsonToIntrojs;

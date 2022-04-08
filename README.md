@@ -14,12 +14,11 @@ Infos about JTI default values : [defaultOptions / defaultTheme](./src/js/defaul
 
 #### Options
 
-| key         | values                | description                                          |
-| ----------- | --------------------- | ---------------------------------------------------- |
-| autoplay    | boolean               | Automaticaly start intro if there's one on this page |
-| delay       | number                | Delay the start method                               |
-| titleNumber | boolean               | Prefix each step's title with a number               |
-| button      | string (accepts html) | Button to start/restart an intro                     |
+| key       | values                | description                                          |
+| --------- | --------------------- | ---------------------------------------------------- |
+| autoplay  | boolean               | Automaticaly start intro if there's one on this page |
+| numbering | boolean               | Prefix each step's title with a number               |
+| button    | string (accepts html) | Button to start/restart an intro                     |
 
 #### Theme
 

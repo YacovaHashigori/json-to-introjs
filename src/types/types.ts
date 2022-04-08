@@ -25,8 +25,7 @@ export namespace JTI {
 
   export type Options = {
     autoplay: boolean;
-    delay: number;
-    titleNumber: boolean;
+    numbering: boolean;
     button: string;
   };
 
