@@ -2,7 +2,24 @@
 
 Make use of the Tour API of Introjs via a single JSON config.
 
----
+## Setup
+
+#### Download
+- Github: [json-to-introjs.zip](https://github.com/YacovaHashigori/json-to-introjs/archive/refs/heads/main.zip)
+
+#### Usage
+```javascript
+import jsonToIntrojs from "json-to-introjs";
+window.onload = () => {
+  let JTI = new jsonToIntrojs(<path_to_json>);
+}
+```
+If you want to have full control over the way to launch an Intro :
+- <b>Don't</b> use any of these options in your json config file : "autoplay" | "button"
+- Trigger the Intro whenever you want by calling (after JTI has been initialized) : 
+```javascript 
+JTI.start() 
+```
 
 ## Json config
 
@@ -26,8 +43,6 @@ These options take effect on all intros (futur implementation might allow you to
 | key   | values                       | description                     |
 | ----- | ---------------------------- | ------------------------------- |
 | color | string (any valid css color) | Sets the color used for Introjs |
-
----
 
 ### Introjs
 
